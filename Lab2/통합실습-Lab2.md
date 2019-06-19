@@ -219,3 +219,87 @@ OK
 10010079	JUSTICE	URSA	3321 Risus. Ave	San Jose	CA	96850
 10010088	BOOTH	DECLAN	4048 Nunc Rd.	San Francisco	CA	96324
 ```
+
+## Test 5
+```
+-- solution.sql (경로 : /home/training/problem5)
+
+use problem5;
+
+select concat_ws('\t',fname , lname, city, state)
+from customer c
+where c.city = 'Palo Alto'
+and   c.state = 'CA'
+union all
+select concat_ws('\t',fname , lname, city, state)
+from employee e
+where e.city = 'Palo Alto'
+and   e.state = 'CA'
+;
+
+-- 실행 cmd
+$ hive -f ./solution.sql
+
+-- 결과
+$ hive -f ./solution.sql
+
+Farrah	Preston	Palo Alto	CA
+Brielle	Hudson	Palo Alto	CA
+Nelle	Kim	Palo Alto	CA
+Tatum	Jacobs	Palo Alto	CA
+Ivan	Gentry	Palo Alto	CA
+Naida	Tran	Palo Alto	CA
+Alden	Daniels	Palo Alto	CA
+Maggy	Mcdaniel	Palo Alto	CA
+Griffin	Pate	Palo Alto	CA
+Burton	Hayes	Palo Alto	CA
+Ali	Barker	Palo Alto	CA
+Jasper	Lara	Palo Alto	CA
+```
+
+## Test 6
+```
+-- 데이터베이스 변경
+use problem6 ;
+
+-- solution 테이블 생성
+create external table solution
+(
+  id int , 
+  fname string,
+  lname string, 
+  address string,
+  city string,
+  state string,
+  zip string,
+  birthday string
+ )
+;
+
+-- solution 테이블에 데이터 적재
+insert into table solution 
+select id,
+       fname,
+       lname,
+       address,
+       city,
+       state,
+       zip,
+       substr(birthday,1,5)
+from employee;
+
+-- 결과
+hive> select * from solution limit 10;
+OK
+10000000	Deanna	Lane	900-1514 Vitae, Rd.	Lafayette	LA	97827	08/31
+10000001	Hall	Garrett	9656 Urna Avenue	Tucson	AZ	86511	08/24
+10000002	Lucian	Dotson	P.O. Box 277, 4808 Fusce St.	Kearney	NE	57731	08/12
+10000003	Yuri	Sherman	Ap #399-8275 Molestie Road	Kapolei	HI	16943	08/26
+10000004	Jaime	Griffin	Ap #647-2123 Quis Rd.	Madison	WI	51394	08/13
+10000005	Zorita	Weber	747-9424 Orci, Av.	Hattiesburg	MS	90262	08/09
+10000006	Mara	Meadows	517-4594 Ac, Rd.	Huntsville	AL	35374	08/11
+10000007	Evan	Richard	P.O. Box 223, 8182 Non, Av.	College	AK	99682	08/25
+10000008	Briar	Anderson	Ap #548-6452 Nunc Road	Cleveland	OH	90704	08/18
+10000009	Cole	Odom	P.O. Box 962, 2496 Sodales St.	Boston	MA	27282	08/21
+```
+
