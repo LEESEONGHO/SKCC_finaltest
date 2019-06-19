@@ -179,3 +179,35 @@ sudo usermod -aG wheel training
 B. 계정 그룹 설정 확인
 getent group wheel
 ```
+
+## MySQL test DB 생성 및 권한 Grant
+```
+CREATE DATABASE test DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+GRANT ALL ON test.* TO 'training'@'%' IDENTIFIED BY 'training';
+
+-- 결과
+MariaDB [(none)]> CREATE DATABASE test DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> GRANT ALL ON test.* TO 'training'@'%' IDENTIFIED BY 'training';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| amon               |
+| hue                |
+| metastore          |
+| mysql              |
+| oozie              |
+| performance_schema |
+| rmon               |
+| scm                |
+| sentry             |
+| test               |
++--------------------+
+11 rows in set (0.01 sec)
+
+```
