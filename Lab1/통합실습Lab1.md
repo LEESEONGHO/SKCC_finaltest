@@ -1,10 +1,15 @@
 ## Local to Server 접속
 ```
-ssh -i ./SKCC.pem  centos@13.209.129.5
-ssh -i ./SKCC.pem  centos@13.209.159.160
-ssh -i ./SKCC.pem  centos@13.209.36.230
-ssh -i ./SKCC.pem  centos@15.164.111.130
-ssh -i ./SKCC.pem  centos@15.164.121.225
+ssh -i ./SKCC.pem  centos@15.164.124.231
+ssh -i ./SKCC.pem  centos@15.164.152.205
+ssh -i ./SKCC.pem  centos@15.164.68.198
+ssh -i ./SKCC.pem  centos@15.164.7.245
+ssh -i ./SKCC.pem  centos@15.164.86.252
+
+이후 서버 5대 재발급 받아 진행함
+
+
+
 ```
 
 ## 각 서버별 centos 계정 패스워드 변경
@@ -30,6 +35,15 @@ sudo vi /etc/hosts
 172.31.39.119   data01.cdhcluster.com   dn1
 172.31.34.132   data02.cdhcluster.com   dn2
 172.31.46.185   data03.cdhcluster.com   dn3
+
+
+-- 신규 발급받은 IP
+172.31.13.45    master01.cdhcluster.com mn1
+172.31.12.220   data01.cdhcluster.com   dn1
+172.31.15.46    data02.cdhcluster.com   dn2
+172.31.1.226    data03.cdhcluster.com   dn3
+172.31.12.50    util01.cdhcluster.com   util01
+
 ```
 
 ## key gen 설정 (util01)
