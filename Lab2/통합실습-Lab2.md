@@ -379,3 +379,51 @@ mysql> select * from solution limit 10;
 10 rows in set (0.00 sec)
 
 ```
+
+## Test 9
+```
+-- 데이터베이스 변경
+use problem9;
+
+-- 테이블 생성
+create external table solution 
+( 
+ id string,
+ fname string,
+ lname string,
+ address string,
+ city string,
+ state string,
+ zip string,
+ birthday string
+);
+
+-- 데이터 적재
+insert into solution
+select distinct concat('A',id) as id,
+       fname,
+       lname,
+       address,
+       city,
+       state,
+       zip,
+       birthday
+from customer;
+
+-- 결과
+select* from solution limit 10;
+
+hive> select * from solution limit 10;
+OK
+A1000000	Medge	Roach	P.O. Box 799, 6865 Nec Rd.	Racine	WI	56336	08/10/2016
+A1000001	Nasim	Stone	P.O. Box 975, 759 Scelerisque Street	Tuscaloosa	AL	36696	08/16/2016
+A1000002	Jolie	Schneider	P.O. Box 829, 9011 Vulputate St.	Kapolei	HI	59913	08/22/2016
+A1000003	Lacota	Molina	Ap #831-2124 Pharetra. Avenue	Philadelphia	PA	84716	08/24/2016
+A1000004	Blaine	Sweet	P.O. Box 151, 7847 Pede. St.	Topeka	KS	66452	08/21/2016
+A1000005	Lesley	Bird	P.O. Box 569, 6635 Maecenas St.	Dallas	TX	87918	08/26/2016
+A1000006	Sydnee	Howell	P.O. Box 147, 3714 Dignissim Street	Dallas	TX	94072	08/11/2016
+A1000007	Jermaine	Griffin	Ap #859-2722 Donec Rd.	Baltimore	MD	13392	08/10/2016
+A1000008	Brynn	Pennington	Ap #968-9936 Eleifend Avenue	Lincoln	NE	89536	08/23/2016
+A1000009	Ava	Noble	P.O. Box 955, 1459 Urna St.	Baton Rouge	LA	34822	08/08/2016
+Time taken: 0.082 seconds, Fetched: 10 row(s)
+```
