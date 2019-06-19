@@ -427,3 +427,38 @@ A1000008	Brynn	Pennington	Ap #968-9936 Eleifend Avenue	Lincoln	NE	89536	08/23/20
 A1000009	Ava	Noble	P.O. Box 955, 1459 Urna St.	Baton Rouge	LA	34822	08/08/2016
 Time taken: 0.082 seconds, Fetched: 10 row(s)
 ```
+
+## Test 10
+```
+-- 데이터베이스 변경
+use problem10;
+
+-- view 생성 (solution)
+create view solution as
+select c.id as id , 
+       c.fname as fname, 
+       c.lname as lname,
+       c.city as city,
+       c.state as state,
+       b.charge as charge, 
+       substr(b.tstamp,0,10) as billdate
+from customer c , 
+     billing b
+where c.id = b.id 
+;
+
+-- 결과
+select * from solution limit 10;
+
+1000000	Medge	Roach	Racine	WI	15.79	2017-03-05
+1000001	Nasim	Stone	Tuscaloosa	AL	57.73	2016-09-05
+1000002	Jolie	Schneider	Kapolei	HI	556.04	2017-02-06
+1000003	Lacota	Molina	Philadelphia	PA	654.63	2016-12-01
+1000004	Blaine	Sweet	Topeka	KS	287.12	2017-05-30
+1000005	Lesley	Bird	Dallas	TX	900.14	2016-10-26
+1000006	Sydnee	Howell	Dallas	TX	347.88	2016-10-04
+1000007	Jermaine	Griffin	Baltimore	MD	754.84	2017-08-01
+1000008	Brynn	Pennington	Lincoln	NE	289.66	2017-03-26
+1000009	Ava	Noble	Baton Rouge	LA	928.68	2016-12-12
+
+```
