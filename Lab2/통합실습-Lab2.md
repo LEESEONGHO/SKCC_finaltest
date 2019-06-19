@@ -462,3 +462,89 @@ select * from solution limit 10;
 1000009	Ava	Noble	Baton Rouge	LA	928.68	2016-12-12
 
 ```
+
+## Test 11
+```
+-- solution.sql(경로 : /home/training/problem11)
+
+-- 수행 command
+hive -f solution.sql
+```
+## a
+```
+-- 데이터베이스 변경
+use default;
+
+use default;
+select b.name 
+    , count(*)
+  from order_details a,
+       products b
+ where a.prod_id = b.prod_id
+   and b.brand = 'Dualcore'
+group by b.name
+limit 3
+;
+
+
+
+-- 결과 (상위 판매실적 3개)
+1.5 TB SATA3 Disk	3956
+16 GB Micro SD	3279
+2 GB Micro SD	1979
+```
+
+## b
+```
+select to_date(o.order_date), 
+       sum(p.price) as revenue , 
+       sum(p.price - p.cost) as profit
+  from orders o,
+       order_details d,
+       products p
+ where o.order_id = d.order_id
+   and d.prod_id  = p.prod_id
+   and p.brand='Dualcore'
+group by to_date(o.order_date);
+
+-- 결과
+OK
+2008-06-01	170742	14018
+2008-06-02	270806	26356
+2008-06-03	157680	16130
+2008-06-04	84182	9349
+2008-06-05	99186	10465
+2008-06-06	142582	11095
+2008-06-07	217946	25676
+2008-06-08	93020	12750
+2008-06-09	64133	7884
+2008-06-10	127639	14730
+(중략)
+```
+
+## c
+```
+select o.order_id,
+       sum(p.price) as total
+  from orders o,
+       order_details d,
+       products p
+ where o.order_id = d.order_id
+   and d.prod_id  = p.prod_id
+ group by o.order_id
+ order by total desc
+ limit 10;
+
+ -- 결과
+5605465	940577
+5997571	702157
+5551963	699348
+5944419	627266
+5401363	624428
+6156005	554497
+6293815	554467
+5081729	551978
+5111703	551007
+5353895	549988
+
+```
