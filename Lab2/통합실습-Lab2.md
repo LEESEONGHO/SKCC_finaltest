@@ -78,3 +78,144 @@ OK
 10008	Driscoll	Bishop	P.O. Box 428, 449 Cum Ave	La Reina	NV	61197	05/18/84	12/20/16
 10009	Tanisha	Rosales	5388 Vitae Street	Caramanico Terme	TX	14932	07/03/64	09/01/16
 ```
+
+## Test 3
+```
+-- 데이터베이스 변경
+use problem3;
+
+-- 테이블 생성
+create external table if not exists solution (
+id int,
+fname string,
+lname string,
+hphone string
+)
+comment "problem3"
+row format delimited fields terminated by "\t"
+stored as orc location "/user/training/problem3/solution"
+;
+
+-- 데이터적재
+insert into problem3.solution
+select a.id
+, a.fname
+, a.lname
+, a.hphone
+from problem3.customer a
+     inner join
+     problem3.account b
+     on a.id = b.custid
+where 1=1
+  and b.amount < 0
+;
+
+-- 결과
+hive> select * from solution ;
+OK
+10001	Sybil	Wiley	(504) 780-0366
+10010	Brittany	Martinez	(341) 462-0222
+10011	Merritt	Roth	(341) 344-3753
+10015	Amaya	Weeks	(979) 852-8703
+10023	Jermaine	Barnes	(245) 674-2743
+10026	Lacy	Rios	(227) 499-8358
+10036	Laith	Kirk	(312) 466-1766
+10045	Chancellor	Hart	(913) 147-2294
+10046	Olga	Hall	(615) 645-2920
+10053	Jonah	Alvarado	(578) 584-0882
+10054	Brady	Cunningham	(631) 358-1802
+10056	Yoshio	Benton	(875) 483-7221
+10068	Maggy	Whitney	(886) 286-7557
+10073	Ariel	Jordan	(422) 191-3529
+10080	Margaret	Mercer	(695) 261-7712
+10092	Christian	Baker	(659) 732-3384
+10093	Brandon	Rhodes	(344) 635-8512
+10094	Orli	Nolan	(459) 228-5694
+10096	Blaze	Gill	(834) 777-5765
+```
+
+## Test 4
+```
+-- 데이터베이스 생성
+create database if not exists problem4;
+
+-- 데이터베이스 변경
+use problem4;
+
+-- employee1 테이블 생성
+create external table if not exists employee1 (
+cust_id int,
+fname string,
+lname string,
+adress string,
+city string,
+state string,
+zip string
+)
+COMMENT "employee1"
+ROW FORMAT DELIMITED FIELDS TERMINATED BY "\t"
+STORED AS TEXTFILE LOCATION "/user/training/problem4/data/employee1/"
+;
+
+-- employee2 테이블 생성
+create external table if not exists employee2 (
+cust_id int,
+digit string,
+fname string,
+lname string,
+adress string,
+city string,
+state string,
+zip string
+)
+COMMENT "employee2"
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ","
+STORED AS TEXTFILE LOCATION "/user/training/problem4/data/employee2/"
+;
+
+-- solution 테이블 생성
+create external table if not exists solution (
+cust_id int,
+fname string,
+lname string,
+adress string,
+city string,
+state string,
+zip string
+)
+COMMENT "problem4"
+ROW FORMAT DELIMITED FIELDS TERMINATED BY "\t"
+STORED AS TEXTFILE LOCATION "/user/training/problem4/solution/"
+;
+
+-- solution 테이블에 데이터 적재
+insert into solution
+select *
+from employee1
+where 1=1
+and state = 'CA'
+union all
+select cust_id
+, fname
+, lname
+, adress
+, city
+, state
+, zip
+from employee2
+where 1=1
+and state = 'CA'
+;
+
+-- 결과
+hive> select * from solution ;
+OK
+10000063	Burton	Hayes	Ap #720-4012 Vivamus Avenue	San Diego	CA	96066-0000
+10000068	Ria	Herman	2974 Cras St.	San Francisco	CA	95310-0000
+10000073	Daquan	Roy	7636 Et Rd.	Los Angeles	CA	96606-0000
+10010024	WOOD	PRESTON	2782 Amet Street	San Francisco	CA	92124
+10010032	ROJAS	BO	Ap #445-6043 Massa Av.	San Diego	CA	92363
+10010037	BANKS	ZANE	4778 Interdum. St.	San Diego	CA	92120
+10010079	JUSTICE	URSA	3321 Risus. Ave	San Jose	CA	96850
+10010088	BOOTH	DECLAN	4048 Nunc Rd.	San Francisco	CA	96324
+```
