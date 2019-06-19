@@ -163,3 +163,19 @@ EXIT;
 # sudo systemctl start cloudera-scm-server
 ```
 
+## HUE, IMPALA, OOZIE, HIVE, SQOOP 서비스 추가
+```
+첨부한 CM.png 참고부탁드립니다.
+```
+
+## training 계정 생성
+```
+A. 모든 host에 아래 계정 생성
+cat /etc/passwd | grep training
+sudo useradd training
+sudo passwd training
+sudo usermod -aG wheel training
+
+B. 계정 그룹 설정 확인
+getent group wheel
+```
