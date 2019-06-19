@@ -36,3 +36,45 @@ A100075	Basic Checking	Active	19327	-32614.48
 A100078	Basic Checking	Active	78031	26089.52
 (중략)
 ```
+
+## Test 2
+```
+-- 데이터베이스 생성
+create database if not exists problem2;
+
+-- 데이터 베이스 변경
+use problem2;
+
+-- 외부 테이블 생성
+create external table if not exists solution (
+id int,
+fname string,
+lname string,
+address string,
+city string,
+state string,
+zip string,
+birthday string,
+hireday string
+)
+comment "employee"
+row format delimited fields terminated by "\t"
+stored as parquet location "/user/hive/warehouse/employee"
+
+-- hdfs 경로 상의 데이터 복사
+hive> dfs -cp /user/training/problem2/data/employee/*.parquet /user/hive/warehouse/employee/
+
+-- 결과
+hive> select * from solution;
+OK
+10000	Rigel	Shaw	Ap #124-4664 Vulputate, Rd.	Cannole	OH	83380	07/12/80	05/30/18
+10001	Chancellor	Bond	Ap #702-9298 Pretium Street	Piana degli Albanesi	AZ	38128	03/02/95	04/12/18
+10002	Aurora	Franco	5717 Mattis. Street	Casalvieri	CA	12296	01/29/77	07/19/18
+10003	Armando	Aguilar	Ap #189-3372 Nam St.	Durgapur	TX	50289	05/10/50	04/14/18
+10004	Neve	Sharp	2748 Risus. Rd.	Poole	NV	23113	07/07/76	06/04/17
+10005	Kenyon	Whitfield	Ap #863-352 Blandit St.	Ayr	CA	62678	12/23/66	04/30/18
+10006	Germane	Pruitt	P.O. Box 266, 1496 Mus. St.	Opole	DE	21311	02/20/63	02/14/18
+10007	Alyssa	Lindsey	989-4040 Habitant Av.	Lexington	TX	62013	09/03/95	05/17/17
+10008	Driscoll	Bishop	P.O. Box 428, 449 Cum Ave	La Reina	NV	61197	05/18/84	12/20/16
+10009	Tanisha	Rosales	5388 Vitae Street	Caramanico Terme	TX	14932	07/03/64	09/01/16
+```
