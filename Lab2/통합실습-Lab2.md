@@ -303,3 +303,23 @@ OK
 10000009	Cole	Odom	P.O. Box 962, 2496 Sodales St.	Boston	MA	27282	08/21
 ```
 
+## Test 7
+```
+-- solution.sql (경로 : /home/training/problem7)
+
+select concat(a.fname,' ' , a.lname)
+from (
+select e.*
+from employee e
+where e.city = 'Seattle'
+order by fname,lname
+) a
+;
+
+-- 수행 command
+hive -f ./solution.sql
+```
+
+## Test 8
+```
+```
